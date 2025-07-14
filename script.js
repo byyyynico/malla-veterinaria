@@ -1,78 +1,87 @@
-// Datos de ramos con dependencias
-const courses = {
-  // === PRIMER AÑO ===
-  "Química General": ["Bioquímica", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Biología Celular": ["Histología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Zoología": ["Parasitología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Inglés I": ["Inglés II", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Ecología": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Rol del Médico Veterinario": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Bioquímica": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Histología": ["Embriología", "Patología General", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Anatomía Animal I": ["Anatomía Animal II", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Zootecnia": ["Nutrición y Alimentación", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Etología y Bienestar Animal": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Electivo Antropológico Cristiano": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  // === SEGUNDO AÑO ===
-  "Fisiología Animal I": ["Fisiología Animal II", "Fisiopatología I", "Farmacología", "Evaluación de Ciclo Inicial", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Embriología": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Anatomía Animal II": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Microbiología General": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Reproducción y Genética": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Inglés II": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Electivo Diversidad I": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Fisiología Animal II": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Patología General": ["Evaluación de Ciclo Inicial", "Semiotecnia", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Nutrición y Alimentación": ["Producción de Aves y Cerdos", "Producción de Rumiantes Menores", "Producción Bovina", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Epidemiología": ["Evaluación de Ciclo Inicial", "Vigilancia Epidemiológica", "Gestión Ambiental", "Tecnología de Alimentos e Inocuidad", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  "Contexto Social": ["Negocios y Emprendimiento", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II", "Desarrollo Rural"],
-  "Parasitología": ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"],
-  // ... Sigue agregando todos los cursos y dependencias que falten
-};
-
-// Crear estructura de dependencias inversa
-const unlockMap = {};
-Object.entries(courses).forEach(([course, unlocks]) => {
-  unlocks.forEach(dep => {
-    if (!unlockMap[dep]) unlockMap[dep] = [];
-    unlockMap[dep].push(course);
-  });
-});
-
-const allCourses = Array.from(new Set([
-  ...Object.keys(courses),
-  ...Object.values(courses).flat()
-]));
-
-const courseElements = {};
-
-// Crear elementos
-const grid = document.getElementById('grid');
-allCourses.forEach(course => {
-  const div = document.createElement('div');
-  div.textContent = course;
-  div.classList.add('course');
-
-  // Si tiene requisitos inversos, es locked inicialmente
-  if (unlockMap[course]) {
-    div.classList.add('locked');
+const ramos = [
+  {
+    semestre: "I Semestre",
+    nombre: "Química General",
+    abre: ["Bioquímica", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
+  },
+  {
+    semestre: "I Semestre",
+    nombre: "Biología Celular",
+    abre: ["Histología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
+  },
+  {
+    semestre: "I Semestre",
+    nombre: "Zoología",
+    abre: ["Parasitología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
+  },
+  {
+    semestre: "I Semestre",
+    nombre: "Inglés I",
+    abre: ["Inglés II", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
+  },
+  {
+    semestre: "I Semestre",
+    nombre: "Ecología",
+    abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
+  },
+  {
+    semestre: "I Semestre",
+    nombre: "Rol del Médico Veterinario",
+    abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"]
   }
+  // Continúa agregando aquí el resto de los ramos con mismo formato
+];
+
+const malla = document.querySelector('.malla');
+
+function crearRamo(ramo) {
+  const div = document.createElement('div');
+  div.className = 'ramo';
+  div.textContent = ramo.nombre;
+  div.dataset.nombre = ramo.nombre;
+  if (ramo.abre) div.dataset.abre = JSON.stringify(ramo.abre);
+  div.classList.add('bloqueado');
 
   div.addEventListener('click', () => {
-    if (div.classList.contains('locked')) return;
-    if (div.classList.contains('completed')) return;
-
-    div.classList.add('completed');
-
-    // Desbloquear dependientes
-    if (courses[course]) {
-      courses[course].forEach(dep => {
-        const el = courseElements[dep];
-        if (el) el.classList.remove('locked');
-      });
-    }
+    if (div.classList.contains('bloqueado')) return;
+    div.classList.toggle('aprobado');
+    const desbloquear = JSON.parse(div.dataset.abre || '[]');
+    desbloquear.forEach(nombre => desbloquearRamo(nombre));
   });
 
-  courseElements[course] = div;
-  grid.appendChild(div);
-});
+  return div;
+}
+
+function desbloquearRamo(nombre) {
+  const ramosDOM = document.querySelectorAll('.ramo');
+  ramosDOM.forEach(r => {
+    if (r.dataset.nombre === nombre) {
+      r.classList.remove('bloqueado');
+    }
+  });
+}
+
+function agruparPorSemestre(lista) {
+  const grupos = {};
+  lista.forEach(r => {
+    if (!grupos[r.semestre]) grupos[r.semestre] = [];
+    grupos[r.semestre].push(r);
+  });
+  return grupos;
+}
+
+const grupos = agruparPorSemestre(ramos);
+
+for (const [semestre, listaRamos] of Object.entries(grupos)) {
+  const semestreDiv = document.createElement('div');
+  semestreDiv.className = 'semestre';
+  const h2 = document.createElement('h2');
+  h2.textContent = semestre;
+  semestreDiv.appendChild(h2);
+  listaRamos.forEach(ramo => {
+    const el = crearRamo(ramo);
+    if (!ramo.abre || ramo.abre.length === 0) el.classList.remove('bloqueado');
+    semestreDiv.appendChild(el);
+  });
+  malla.appendChild(semestreDiv);
+}
